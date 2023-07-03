@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('data_otdps', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
             $table->string('no_kepolisian');
-            $table->integer('umur');
+            $table->string('umur');
             $table->string('ttl');
             $table->string('pekerjaan');
             $table->string('destinasi_tujuan');
+            $table->string('destinasi_pulau')->nullable(); ;
             $table->timestamps();
         });
     }

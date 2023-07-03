@@ -28,6 +28,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Data Orang Terlantar Dalam Perjalanan (OTDP)</h3>
+                <button type="button" class="btn btn-primary float-right"><a  href="{{ route('layouts.data_otdp.create_data_otdp') }}"><i class="fas fa-plus"></i> Tambah Data </a></button>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

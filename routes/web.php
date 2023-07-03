@@ -18,3 +18,6 @@ Route::get('/', function () {
 });
 
 Route::resource('data_otdp',DataOtdpController::class);
+Route::resource('create_data_otdp',DataOtdpController::class);
+Route::get('/layouts/data_otdp/create_data_otdp', [DataOtdpController::class, 'create'])->name('layouts.data_otdp.create_data_otdp');
+Route::post('/tambah-data-otdp', [DataOtdpController::class, 'postcreate'])->name('data_otdp.postcreate');
