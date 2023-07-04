@@ -56,11 +56,11 @@
                   <div class="form-group">
                     <label>Pekerjaan</label>
                     <select class="form-control" name="pekerjaanC">
-                        <option>Wirausaha</option>
-                        <option>Petani</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
+                        <option>Wiraswasta</option>
+                        <option>Buruh</option>
+                        <option>Karyawan Swasta</option>
+                        <option>Ibu Rumah Tangga</option>
+                        <option>Pelajar</option>
                     </select>
 
                   </div>

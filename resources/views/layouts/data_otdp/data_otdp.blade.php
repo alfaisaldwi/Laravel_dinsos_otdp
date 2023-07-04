@@ -28,8 +28,13 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Data Orang Terlantar Dalam Perjalanan (OTDP)</h3>
-                <button type="button" class="btn btn-primary float-right"><a  href="{{ route('layouts.data_otdp.create_data_otdp') }}"><i class="fas fa-plus"></i> Tambah Data </a></button>
-              </div>
+                <button type="button" class="btn btn-primary float-right">
+                    <a href="{{ route('layouts.data_otdp.create_data_otdp') }}" class="text-white">
+                      <i class="fas fa-plus"></i> Tambah Data
+                    </a>
+                  </button>
+
+            </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
@@ -42,6 +47,7 @@
                     <th>Tempat Tanggal Lahir</th>
                     <th>Pekerjaan</th>
                     <th>Destinasi Tujuan</th>
+                    <th>Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -58,6 +64,9 @@
                     <td>{{$otdp->ttl}} </td>
                     <td>{{$otdp->pekerjaan}} </td>
                     <td>{{$otdp->destinasi_tujuan}} </td>
+                    <td>
+                        <a href="{{ route('data_otdp.edit', $otdp->id) }}" class="btn btn-primary">Edit</a> <!-- Tombol edit -->
+                      </td>
                   </tr>
                   @empty
                   <tr>

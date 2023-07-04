@@ -17,7 +17,7 @@ class DataOtdpController extends Controller
         //
         return view('layouts.data_otdp.create_data_otdp');
     }
-    
+
     public function postcreate(Request $request)
     {
         // Validasi data yang diterima dari form
@@ -45,5 +45,26 @@ class DataOtdpController extends Controller
         // Redirect ke halaman lain atau tampilkan pesan sukses
         return redirect()->back()->with('success', 'Data berhasil ditambahkan');
     }
+    public function edit($id)
+    {
+        $data_otdp = DataOtdp::findOrFail($id);
+        return view('layouts.data_otdp.edit_data_otdp', compact('data_otdp'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data_otdp = DataOtdp::findOrFail($id);
+        $data_otdp->nama = $request->input('nama');
+        $data_otdp->no_kepolisian = $request->input('no_kepolisian');
+        $data_otdp->umur = $request->input('umur');
+        $data_otdp->ttl = $request->input('ttl');
+        $data_otdp->pekerjaan = $request->input('pekerjaan');
+        $data_otdp->destinasi_tujuan = $request->input('destinasi_tujuan');
+        $data_otdp->destinasi_pulau = $request->input('destinasi_pulau');
+        $data_otdp->save();
+
+        return redirect()->route('data_otdp.index')->with('success', 'Data OTDP berhasil diperbarui.');
+    }
 }
+
 

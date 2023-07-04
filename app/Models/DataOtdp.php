@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class DataOtdp extends Model
 {
+    protected $primaryKey = 'id';
     use HasFactory;
      protected $table = 'data_otdps';
-    protected $primaryKey = 'id_otdp';
     protected $fillable = [
         'no_kepolisian', 'umur', 'ttl', 'pekerjaan', 'destinasi_tujuan'
     ];
