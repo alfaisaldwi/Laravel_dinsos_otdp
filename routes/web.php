@@ -23,3 +23,4 @@ Route::get('/layouts/data_otdp/create_data_otdp', [DataOtdpController::class, 'c
 Route::post('/tambah-data-otdp', [DataOtdpController::class, 'postcreate'])->name('data_otdp.postcreate');
 Route::get('/data_otdp/{id}/edit', [DataOtdpController::class, 'edit'])->name('data_otdp.edit');
 Route::put('/data_otdp/{id}', [DataOtdpController::class, 'update'])->name('data_otdp.update');
+Route::delete('/data_otdp/{id}', 'DataOtdpController@destroy')->name('data_otdp.destroy');

@@ -1,70 +1,87 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\DataOtdp;
-
 use Illuminate\Http\Request;
 
 class DataOtdpController extends Controller
 {
-    public function index()
+ public function index()
     {
         $data_otdps = DataOtdp::latest()->get();
         return view('layouts.data_otdp.data_otdp', compact('data_otdps'));
     }
+
     public function create()
     {
-        //
         return view('layouts.data_otdp.create_data_otdp');
     }
 
-    public function postcreate(Request $request)
+    public function postCreate(Request $request)
     {
-        // Validasi data yang diterima dari form
-        $validatedData = $request->validate([
-            'namaC' => 'required',
-            'nokC' => 'required',
-            'umurC' => 'required',
-            'ttlC' => 'required',
-            'pekerjaanC' => 'required',
-            'destinasiC' => 'required',
-            'pulauC' => 'required_if:destinasiC,luar_jawa',
-        ]);
-
-        // Buat instance model DataOtdp
+        // ...
+    
+        $destinasi = $request->input('destinasiC');
+        $namaKota = '';
+    
+        if ($destinasi === 'jawa') {
+            $namaKota = $request->input('kotaC') . '-' . $request->input('destinasiC');;
+        } else if ($destinasi === 'luar_jawa') {
+            $namaKota = $request->input('kotaC') . '-' . $request->input('pulauC');
+        }
+    
+        // Simpan data ke database
         $dataOtdp = new DataOtdp();
-        $dataOtdp->nama = $validatedData['namaC'];
-        $dataOtdp->no_kepolisian = $validatedData['nokC'];
-        $dataOtdp->umur = $validatedData['umurC'];
-        $dataOtdp->ttl = $validatedData['ttlC'];
-        $dataOtdp->pekerjaan = $validatedData['pekerjaanC'];
-        $dataOtdp->destinasi_tujuan = $validatedData['destinasiC'];
-        $dataOtdp->destinasi_pulau = $validatedData['pulauC'] ?? null; // Jika destinasiC adalah 'jawa', pulauC akan bernilai null
+        $dataOtdp->nama = $request->input('namaC');
+        $dataOtdp->no_kepolisian = $request->input('nokC');
+        $dataOtdp->umur = $request->input('umurC');
+        $dataOtdp->ttl = $request->input('ttlC');
+        $dataOtdp->pekerjaan = $request->input('pekerjaanC');
+        $dataOtdp->destinasi_tujuan = $namaKota;
         $dataOtdp->save();
-
-        // Redirect ke halaman lain atau tampilkan pesan sukses
-        return redirect()->back()->with('success', 'Data berhasil ditambahkan');
+    
+        // ...
+    
+        return redirect()->route('data_otdp.index')->with('success', 'Data OTDP berhasil ditambahkan');
     }
+
+
     public function edit($id)
     {
-        $data_otdp = DataOtdp::findOrFail($id);
-        return view('layouts.data_otdp.edit_data_otdp', compact('data_otdp'));
+        $dataOtdp = DataOtdp::findOrFail($id);
+
+        return view('layouts.data_otdp.edit_data_otdp', compact('dataOtdp'));
     }
 
     public function update(Request $request, $id)
     {
-        $data_otdp = DataOtdp::findOrFail($id);
+        $data_otdp = DataOtdp::find($id);
         $data_otdp->nama = $request->input('nama');
         $data_otdp->no_kepolisian = $request->input('no_kepolisian');
         $data_otdp->umur = $request->input('umur');
         $data_otdp->ttl = $request->input('ttl');
         $data_otdp->pekerjaan = $request->input('pekerjaan');
-        $data_otdp->destinasi_tujuan = $request->input('destinasi_tujuan');
-        $data_otdp->destinasi_pulau = $request->input('destinasi_pulau');
+        
+        if ($request->input('destinasi') == 'jawa') {
+            $data_otdp->destinasi_tujuan = $request->input('kota').'-Jawa';
+        } else {
+            $data_otdp->destinasi_tujuan= $request->input('pulau').'-'.$request->input('kota');
+        }
+
         $data_otdp->save();
 
-        return redirect()->route('data_otdp.index')->with('success', 'Data OTDP berhasil diperbarui.');
+        return redirect()->route('data_otdp.index')->with('success', 'Data OTDP berhasil diperbarui');
     }
+
+    public function destroy($id)
+{
+    $data_otdp = DataOtdp::find($id);
+    if ($data_otdp) {
+        $data_otdp->delete();
+        return redirect()->route('data_otdp.index')->with('success', 'Data OTDP berhasil dihapus');
+    }
+    return redirect()->route('data_otdp.index')->with('error', 'Data OTDP tidak ditemukan');
 }
 
-
+}
