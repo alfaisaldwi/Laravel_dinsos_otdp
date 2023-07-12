@@ -33,80 +33,109 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{ route('data_otdp.update', $dataOtdp->id) }}">
-                            @csrf
-                            @method('PUT')
+                        <form action="{{ route('data_otdp.update', $dataOtdp->id) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf @method('put')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nama</label>
-                                    <input type="text" class="form-control" name="nama" value="{{ $dataOtdp->nama }}">
+                                    <input type="text" class="form-control" name="nama" placeholder="Nama"
+                                        value="{{$dataOtdp->nama}}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">No. Kepolisian</label>
-                                    <input type="text" class="form-control" name="no_kepolisian" value="{{ $dataOtdp->no_kepolisian }}">
+                                    <input type="text" class="form-control" name="no" placeholder="No. Kepolisian"
+                                        value="{{$dataOtdp->no_kepolisian}}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Umur</label>
-                                    <input type="text" class="form-control" name="umur" value="{{ $dataOtdp->umur }}">
+                                    <input type="number" class="form-control" required name="umur"
+                                        value="{{$dataOtdp->umur}}" placeholder="Umur">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Tempat Tanggal Lahir</label>
-                                    <input type="text" class="form-control" name="ttl" value="{{ $dataOtdp->ttl }}">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <input type="text" class="form-control" required name="tempat_lahir"
+                                                value="{{$dataOtdp->tempat_lahir}}" placeholder="Contoh : Cirebon">
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="date" class="form-control" required name="tanggal_lahir"
+                                                value="{{$dataOtdp->tanggal_lahir}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Alamat</label>
+                                    <textarea class="form-control" required name="alamat"
+                                        placeholder="Alamat">{{$dataOtdp->alamat}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Pekerjaan</label>
                                     <select class="form-control" name="pekerjaan">
-                                        <option>Wiraswasta</option>
-                                        <option>Buruh</option>
-                                        <option>Karyawan Swasta</option>
-                                        <option>Ibu Rumah Tangga</option>
-                                        <option>Pelajar</option>
+                                        <option value="Wiraswasta" {{$dataOtdp->pekerjaan === 'Wiraswasta' ? 'selected'
+                                            : '' }}>Wiraswasta</option>
+                                        <option value="Buruh" {{$dataOtdp->pekerjaan === 'Buruh' ? 'selected'
+                                            : '' }}>Buruh</option>
+                                        <option value="Karyawan Swasta" {{$dataOtdp->pekerjaan === 'Karyawan Swasta' ?
+                                            'selected'
+                                            : '' }}>Karyawan Swasta</option>
+                                        <option value="Ibu Rumah Tangga" {{$dataOtdp->pekerjaan === 'Ibu Rumah Tangga' ?
+                                            'selected'
+                                            : '' }}>Ibu Rumah Tangga</option>
+                                        <option value="Pelajar" {{$dataOtdp->pekerjaan === 'Pelajar' ? 'selected'
+                                            : '' }}>Pelajar</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Pilih Destinasi Tujuan</label>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="jawa" name="destinasi" class="custom-control-input" value="jawa" {{ $dataOtdp->destinasi == 'jawa' ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="jawa">Jawa</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="luar_jawa" name="destinasi" class="custom-control-input" value="luar_jawa" {{ $dataOtdp->destinasi == 'luar_jawa' ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="luar_jawa">Luar Jawa</label>
-                                    </div>
+                                    <label>Destinasi Tujuan</label>
+                                    <select class="form-control" id="destinasi_tujuan" name="destinasi_tujuan">
+                                        <option value="Jawa" {{ $dataOtdp->destinasi_tujuan === 'Jawa Barat' ||
+                                            $dataOtdp->destinasi_tujuan === 'Jawa Tengah' || $dataOtdp->destinasi_tujuan
+                                            === 'Jawa Timur' ? 'selected' : '' }}>Jawa</option>
+                                        <option value="Luar Jawa" {{ $dataOtdp->destinasi_tujuan !== 'Jawa Barat' &&
+                                            $dataOtdp->destinasi_tujuan !== 'Jawa Tengah' && $dataOtdp->destinasi_tujuan
+                                            !== 'Jawa Timur' ? 'selected' : '' }}>Luar Jawa</option>
+
+                                    </select>
                                 </div>
-                                
-                                <div class="form-group" id="form_pulau" style="{{ $dataOtdp->destinasi == 'luar_jawa' ? 'display: block;' : 'display: none;' }}">
-                                    <label>Pilih Pulau Tujuan atau sekitarnya</label>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="sumatera" name="pulau" class="custom-control-input" value="sumatera" {{ $dataOtdp->pulau == 'sumatera' ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="sumatera">Sumatera</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="kalimantan" name="pulau" class="custom-control-input" value="kalimantan" {{ $dataOtdp->pulau == 'kalimantan' ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="kalimantan">Kalimantan</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="sulawesi" name="pulau" class="custom-control-input" value="sulawesi" {{ $dataOtdp->pulau == 'sulawesi' ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="sulawesi">Sulawesi</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="bali" name="pulau" class="custom-control-input" value="bali" {{ $dataOtdp->pulau == 'bali' ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="bali">Bali &amp; Nusa Tenggara</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="papua" name="pulau" class="custom-control-input" value="papua" {{ $dataOtdp->pulau == 'papua' ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="papua">Papua</label>
-                                    </div>
+                                <div class="form-group" id="form_pulau" {{$dataOtdp->destinasi_pulau == null ?
+                                    'style=display:none;' :''}} >
+                                    <label>Pulau Tujuan</label>
+                                    <select class="form-control" id="destinasi_pulau" name="destinasi_pulau">
+                                        <option value="Sumatra" {{$dataOtdp->destinasi_pulau === 'Sumatra' ?
+                                            'selected'
+                                            : '' }}>Sumatra</option>
+                                        <option value="Kalimantan" {{$dataOtdp->destinasi_pulau === 'Kalimantan' ?
+                                            'selected'
+                                            : '' }}>Kalimantan</option>
+                                        <option value="Sulawesi" {{$dataOtdp->destinasi_pulau === 'Sulawesi' ?
+                                            'selected'
+                                            : '' }}>Sulawesi</option>
+                                        <option value="Bali_Nusa_Tenggara" {{$dataOtdp->destinasi_pulau ===
+                                            'Bali_Nusa_Tenggara' ?
+                                            'selected'
+                                            : '' }}>Bali Nusa Tenggara</option>
+                                        <option value="Papua" {{$dataOtdp->destinasi_pulau === 'Papua' ?
+                                            'selected'
+                                            : '' }}>Papua</option>
+                                    </select>
                                 </div>
-                                <div id="form_kota" style="{{ $dataOtdp->destinasi != 'jawa' ? 'display: block;' : 'display: none;' }}">
-                                    <div class="form-group">
-                                        <label>Nama Kota</label>
-                                        <input type="text" class="form-control" name="kota" value="{{ $dataOtdp->kota }}">
-                                    </div>
+                                <div class="form-group">
+                                    <label>Provinsi</label>
+                                    <select class="form-control" id="provinsi" name="provinsi">
+                                        <option value="{{ $dataOtdp->provinsi}}">{{$dataOtdp->provinsi}}</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">File</label>
+                                    <input class="form-control-file" type="file" name="file" id="file">
                                 </div>
 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="submit" class="btn btn-primary">Tambah</button>
                                 </div>
                             </div>
                         </form>
@@ -118,50 +147,66 @@
 </div>
 @include('layouts.footer')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var jawaRadio = document.getElementById('jawa');
-        var luarJawaRadio = document.getElementById('luar_jawa');
-        var formPulau = document.getElementById('form_pulau');
-        var formKota = document.getElementById('form_kota');
-        var destinasi = "{{ $dataOtdp->destinasi }}";
-        var pulau = "{{ $dataOtdp->pulau }}";
+    const destinasiTujuan = document.getElementById("destinasi_tujuan");
+const formPulau = document.getElementById("form_pulau");
+const pulauTujuan = document.getElementById("destinasi_pulau");
+const provinsiTujuan = document.getElementById("provinsi");
 
-        // Mengatur nilai pilihan destinasi
-        if (destinasi === 'jawa') {
-            jawaRadio.checked = true;
-            formPulau.style.display = 'none';
-            formKota.style.display = 'none';
-        } else if (destinasi === 'luar_jawa') {
-            luarJawaRadio.checked = true;
-            formPulau.style.display = 'block';
-            formKota.style.display = 'block';
-        }
+destinasiTujuan.addEventListener("change", function() {
+  if (destinasiTujuan.value === "Jawa") {
+    formPulau.style.display = "none";
+    pulauTujuan.value = "";
+    provinsiTujuan.style.display = "block";
+    provinsiTujuan.disabled = false;
+    showProvinsiJawa();
+  } else {
+    formPulau.style.display = "block";
+  }
+});
 
-        // Mengatur nilai pilihan pulau
-        var pulauRadios = formPulau.querySelectorAll('input[type="radio"]');
-        for (var i = 0; i < pulauRadios.length; i++) {
-            if (pulauRadios[i].value === pulau) {
-                pulauRadios[i].checked = true;
-                formKota.style.display = 'block';
-            }
-        }
+pulauTujuan.addEventListener("change", function() {
+  if (pulauTujuan.value === "") {
+    provinsiTujuan.innerHTML = ""; // Clear existing options
+    return;
+  }
 
-        // Mengatur tampilan form pulau dan kota berdasarkan pilihan destinasi
-        jawaRadio.addEventListener('change', function() {
-            formPulau.style.display = 'none';
-            formKota.style.display = 'block';
-        });
+  if (destinasiTujuan.value === "Luar Jawa") {
+    showProvinsiNonJawa(pulauTujuan.value);
+  }
+});
 
-        luarJawaRadio.addEventListener('change', function() {
-            formPulau.style.display = 'block';
-            formKota.style.display = 'block';
-        });
+function showProvinsiJawa() {
+  provinsiTujuan.innerHTML = ""; // Clear existing options
 
-        // Mengatur tampilan form kota berdasarkan pilihan pulau
-        for (var i = 0; i < pulauRadios.length; i++) {
-            pulauRadios[i].addEventListener('change', function() {
-                formKota.style.display = this.checked ? 'block' : 'none';
-            });
-        }
-    });
+  const jawaProvinsi = ["Jawa Barat", "Jawa Tengah", "Jawa Timur", "DKI Jakarta"];
+  for (let provinsi of jawaProvinsi) {
+    const option = document.createElement("option");
+    option.value = provinsi;
+    option.textContent = provinsi;
+    provinsiTujuan.appendChild(option);
+  }
+}
+
+function showProvinsiNonJawa(pulau) {
+  provinsiTujuan.innerHTML = ""; // Clear existing options
+
+  // Define provinsi for each pulau
+  const pulauProvinsi = {
+    Sumatra: ["Aceh", "Sumatra Utara", "Sumatra Barat", "Riau", "Kepulauan Riau", "Jambi", "Bengkulu", "Sumatra Selatan", "Kepulauan Bangka Belitung", "Lampung"],
+    Kalimantan: ["Kalimantan Barat", "Kalimantan Tengah", "Kalimantan Selatan", "Kalimantan Timur", "Kalimantan Utara"],
+    Sulawesi: ["Sulawesi Utara", "Sulawesi Tengah", "Sulawesi Selatan", "Sulawesi Tenggara", "Gorontalo", "Sulawesi Barat"],
+    "Bali_Nusa_Tenggara": ["Bali", "Nusa Tenggara Barat", "Nusa Tenggara Timur"],
+    Papua: ["Papua Barat", "Papua", "Papua Selatan", "Papua Tengah", "Papua Pegunungan", "Papua Barat Daya"]
+  };
+
+  const selectedProvinsi = pulauProvinsi[pulau];
+  if (selectedProvinsi) {
+    for (let provinsi of selectedProvinsi) {
+      const option = document.createElement("option");
+      option.value = provinsi;
+      option.textContent = provinsi;
+      provinsiTujuan.appendChild(option);
+    }
+  }
+}
 </script>

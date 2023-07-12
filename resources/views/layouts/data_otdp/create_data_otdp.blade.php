@@ -90,7 +90,7 @@
                                         <option value="Sumatra">Sumatra</option>
                                         <option value="Kalimantan">Kalimantan</option>
                                         <option value="Sulawesi">Sulawesi</option>
-                                        <option value="Bali Nusa Tenggara">Bali Nusa Tenggara</option>
+                                        <option value="Bali_Nusa_Tenggara">Bali Nusa Tenggara</option>
                                         <option value="Papua">Papua</option>
                                     </select>
                                 </div>
@@ -134,9 +134,6 @@ destinasiTujuan.addEventListener("change", function() {
     showProvinsiJawa();
   } else {
     formPulau.style.display = "block";
-    // provinsiTujuan.style.display = "none";
-    // provinsiTujuan.disabled = true;
-    // provinsiTujuan.innerHTML = ""; // Clear existing options
   }
 });
 
@@ -183,7 +180,7 @@ function showProvinsiNonJawa(pulau) {
         "Sulawesi Tenggara",
         "Gorontalo",
         "Sulawesi Barat"],
-    "Bali Nusa Tenggara": ["Bali",
+    "Bali_Nusa_Tenggara": ["Bali",
     "Nusa Tenggara Barat",
     "Nusa Tenggara Timur"],
     Papua: ["Papua Barat",
