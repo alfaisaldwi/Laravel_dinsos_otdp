@@ -27,15 +27,10 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Data Orang Terlantar Dalam Perjalanan (OTDP)</h3>
-                            <button type="button" class="btn btn-primary float-right">
-                                <a href="{{ route('data_otdp.create') }}" class="text-white">
-                                    <i class="fas fa-plus"></i> Tambah Data
-                                </a>
-                            </button>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example3" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -45,35 +40,20 @@
                                         <th>Tempat Tanggal Lahir</th>
                                         <th>Pekerjaan</th>
                                         <th>Destinasi Tujuan</th>
-                                        <th>Aksi</th>
+                                        <th>Hasil</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                    $no=0;
-                                    $no++
-                                    @endphp
                                     @forelse ($data_otdps as $otdp)
                                     <tr>
-                                        <td>{{ $no++ }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $otdp->nama }}</td>
                                         <td>{{ $otdp->no_kepolisian }}</td>
                                         <td>{{ $otdp->umur }}</td>
                                         <td>{{ $otdp->tempat_lahir }} {{$otdp->tanggal_lahir}}</td>
                                         <td>{{ $otdp->pekerjaan }}</td>
                                         <td>{{ $otdp->destinasi_tujuan }}</td>
-                                        <td>
-                                            <a href="{{ route('data_otdp.edit', $otdp->id) }}"
-                                                class="btn btn-primary">Edit</a>
-                                            <!-- Tombol edit -->
-                                            <form action="{{ route('data_otdp.destroy', $otdp->id) }}" method="POST"
-                                                style="display: inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
-                                            </form>
-                                        </td>
+                                        <td>{{ $otdp->hasil }}</td>
                                     </tr>
                                     @empty
                                     <tr>
@@ -99,22 +79,19 @@
 @include('layouts.footer')
 
 <script>
-    $(function () {
-        $("#example1").DataTable({
+    $(function() {
+        $("#example3").DataTable({
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "buttons":javascript
-["copy", "csv", "excel", "pdf", "print"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
+            "buttons": [
+                {
+                extend: 'pdf',
+                exportOptions: {
+                    columns: 'th:not(:last-child)'
+                }},
+                {
+                extend: 'excel'}],
+        }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
     });
 </script>

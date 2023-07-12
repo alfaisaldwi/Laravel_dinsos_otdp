@@ -206,4 +206,9 @@ class DataOtdpController extends Controller
         return redirect()->route('data_otdp.index')->with('error', 'Data OTDP tidak ditemukan');
     }
 
+    public function rekomendasi()
+    {
+        $data_otdps = DataOtdp::latest()->get();
+        return view('layouts.rekomendasi.index', compact('data_otdps'));
+    }
 }
