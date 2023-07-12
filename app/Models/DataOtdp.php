@@ -9,8 +9,16 @@ class DataOtdp extends Model
 {
     protected $primaryKey = 'id';
     use HasFactory;
-     protected $table = 'data_otdps';
+    protected $table = 'data_otdps';
     protected $fillable = [
-        'no_kepolisian', 'umur', 'ttl', 'pekerjaan', 'destinasi_tujuan'
+        'no_kepolisian',
+        'umur',
+        'ttl',
+        'pekerjaan',
+        'destinasi_tujuan',
+        'destinasi_pulau',
+        'provinsi',
+        'nama_file',
+        'hasil',
     ];
 }

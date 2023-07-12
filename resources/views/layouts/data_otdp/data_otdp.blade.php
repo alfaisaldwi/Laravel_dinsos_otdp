@@ -59,7 +59,7 @@
                                         <td>{{ $otdp->nama }}</td>
                                         <td>{{ $otdp->no_kepolisian }}</td>
                                         <td>{{ $otdp->umur }}</td>
-                                        <td>{{ $otdp->ttl }}</td>
+                                        <td>{{ $otdp->tempat_lahir }} {{$otdp->tanggal_lahir}}</td>
                                         <td>{{ $otdp->pekerjaan }}</td>
                                         <td>{{ $otdp->destinasi_tujuan }}</td>
                                         <td>
